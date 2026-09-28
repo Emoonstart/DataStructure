@@ -1,14 +1,14 @@
 #ifndef LISTNODE_H
 #define LISTNODE_H
 
-#include <cstddef>
-
-/* Node: data field + pointer field */
-struct listNode {
+// 结点结构（使用 0 而非 nullptr/NULL，兼容 old g++ 4.7.0）
+struct ListNode {
     int data;
-    listNode* next;
+    struct ListNode* pred;
+    struct ListNode* succ;
 
-    listNode(int val) : data(val), next(NULL) {}
+    ListNode() : data(0), pred(0), succ(0) {}
+    ListNode(int val) : data(val), pred(0), succ(0) {}
 };
 
 #endif

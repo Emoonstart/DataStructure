@@ -1,41 +1,43 @@
 #ifndef LIST_H
 #define LIST_H
 
-#include "listNode.h"
-
-/* LinkedList 类：带头哨兵的单链表 */
-class LinkedList {
+// List 类（使用链表节点，实际实现在 main.cpp 中）
+// 以兼容旧编译器 g++ 4.7.0
+class List {
 private:
-    listNode* head;   // 哨兵节点，data 不使用
-    int size;         // 有效结点个数，不含哨兵
+    int _size;
+    struct ListNode {
+        int data;
+        struct ListNode* pred;
+        struct ListNode* succ;
+        ListNode() : data(0), pred(NULL), succ(NULL) {}
+        ListNode(int val) : data(val), pred(NULL), succ(NULL) {}
+    };
+    int _size;
+    struct ListNode* m_header;
+    struct ListNode* m_trailer;
+
+protected:
+    void init();
+    void clear();
 
 public:
-    /* 构造函数：立哨兵 */
-    LinkedList();
+    List();
+    ~List();
 
-    /* 析构函数：释放所有结点 */
-    ~LinkedList();
+    int size() const;
+    bool empty() const;
 
-    /* 拷贝构造函数：深拷贝 */
-    LinkedList(const LinkedList& other);
+    ListNode* header() const;
+    ListNode* trailer() const;
 
-    /* 拷贝赋值运算符：先释放旧内存，再深拷贝 */
-    LinkedList& operator=(const LinkedList& other);
+    int remove(ListNode* p);
 
-    /* 返回链表大小 */
-    int getSize() const;
+    int find(int e) const;
 
-    /* 判断是否为空表 */
-    bool isEmpty() const;
+    void output() const;
 
-    /* 表头插入 */
-    void insertHead(int val);
-
-    /* 表头删除，被删的值写入 val */
-    bool removeHead(int& val);
-
-    /* 遍历输出 */
-    void printList() const;
+    void insertAsSucc(int val);
 };
 
 #endif
